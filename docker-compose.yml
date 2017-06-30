@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  web:
+    container_name: torque-nginx
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./code:/code
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+  php:
+    container_name: torque-php
+    build: ./docker/php
+    volumes:
+      - ./code:/code
+      - ./log.conf:/usr/local/etc/php-fpm.d/zz-log.conf
+      - ./tmp:/tmp
+      # Below lines would be used if straight php:7-fpm image was used without the dockerfile
+      #- ./docker/php/php.ini:/usr/local/etc/php/php.ini
+      #- ./.docker/php/customphp.conf:/usr/local/etc/customphp.conf
+      
+
+  mysql:
+    container_name: torque-mysql
+    image: mysql:latest
+    ports:
+        - 3306:3306
+    volumes:
+        - ./database_data:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: secret
+        MYSQL_DATABASE: project
+        MYSQL_USER: project
+        MYSQL_PASSWORD: project
