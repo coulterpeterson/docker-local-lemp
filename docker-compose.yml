@@ -34,7 +34,7 @@ services:
       working_dir: /application
       volumes:
         - .:/application
-        - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.0/fpm/conf.d/99-overrides.ini
+        - ./docker/php/php-ini-overrides.ini:/etc/php/7.0/fpm/conf.d/99-overrides.ini
     phpmyadmin:
       image: phpmyadmin/phpmyadmin
       container_name: lemp-phpmyadmin
